@@ -10,6 +10,9 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name + '/launch', [
+            'launch/full_simulation.launch.py',
+        ]),
     ],
     install_requires=['setuptools',  'numpy'],
     zip_safe=True,
@@ -21,6 +24,8 @@ setup(
     entry_points={
         'console_scripts': [
             'detector = frontier_exploration.detector:main',
+            'wait_for_clock = frontier_exploration.wait_for_clock:main',
+            'odom_tf_publisher = frontier_exploration.odom_tf_publisher:main',
         ],
     },
 )

@@ -17,7 +17,8 @@ def generate_launch_description():
     rviz = LaunchConfiguration('rviz')
 
     # Path to default world 
-    world_path = os.path.join(get_package_share_directory(package_name),'worlds', 'industrial-warehouse.sdf')
+    #world_path = os.path.join(get_package_share_directory(package_name),'worlds', 'industrial-warehouse.sdf')
+    world_path = os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_house.world')
 
     # Launch Arguments
     declare_world = DeclareLaunchArgument(
@@ -50,7 +51,8 @@ def generate_launch_description():
                     )]), launch_arguments={'gz_args': '-g '}.items()
     )
 
-    # Run the spawner node from the gazebo_ros package. 
+    # Run the spawner node from the gazebo_ros package.
+    """ 
     spawn_diff_bot = Node(
                         package='ros_gz_sim', 
                         executable='create',
@@ -58,6 +60,17 @@ def generate_launch_description():
                                    '-name', 'diff_bot',
                                    '-z', '0.2'],
                         output='screen'
+    )
+    """
+    spawn_diff_bot = Node(
+        package='ros_gz_sim', 
+        executable='create',
+        arguments=['-topic', 'robot_description',
+                '-name', 'diff_bot',
+                '-x', '-2.8',
+                '-y', '0.7',
+                '-z', '0.1'],
+        output='screen'
     )
 
     # Launch the Gazebo-ROS bridge
