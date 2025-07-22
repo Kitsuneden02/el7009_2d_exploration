@@ -5,7 +5,7 @@ from launch.conditions import IfCondition
 from ament_index_python.packages import get_package_share_directory
 from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, GroupAction
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, GroupAction, SetEnvironmentVariable
 
 def generate_launch_description():
 
@@ -18,7 +18,8 @@ def generate_launch_description():
 
     # Path to default world 
     #world_path = os.path.join(get_package_share_directory(package_name),'worlds', 'industrial-warehouse.sdf')
-    world_path = os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_house.world')
+    #world_path = os.path.join(get_package_share_directory('el7009_diff_drive_robot'), 'worlds', 'turtlebot3_house.world')
+    world_path = os.path.join('/home/seabass/Dataset-of-Gazebo-Worlds-Models-and-Maps/worlds/hospital', 'hospital.world')
 
     # Launch Arguments
     declare_world = DeclareLaunchArgument(
@@ -41,7 +42,7 @@ def generate_launch_description():
     gazebo_server = IncludeLaunchDescription(
                     PythonLaunchDescriptionSource([os.path.join(
                         get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py'
-                    )]), launch_arguments={'gz_args': ['-r -s -v1 ', world], 'on_exit_shutdown': 'true'}.items()
+                    )]), launch_arguments={'gz_args': ['-r -s -v1 ', world], 'on_exit_shutdown': 'true', 'use_sim_time': 'true'}.items()
     )
 
     # Always launch the gazebo client to visualize the simulation
@@ -52,7 +53,7 @@ def generate_launch_description():
     )
 
     # Run the spawner node from the gazebo_ros package.
-    """ 
+    """
     spawn_diff_bot = Node(
                         package='ros_gz_sim', 
                         executable='create',
@@ -61,17 +62,19 @@ def generate_launch_description():
                                    '-z', '0.2'],
                         output='screen'
     )
+    
     """
     spawn_diff_bot = Node(
         package='ros_gz_sim', 
         executable='create',
         arguments=['-topic', 'robot_description',
                 '-name', 'diff_bot',
-                '-x', '-2.8',
-                '-y', '0.7',
+                '-x', '-11.11',
+                '-y', '10.31', #10.68
                 '-z', '0.1'],
         output='screen'
     )
+
 
     # Launch the Gazebo-ROS bridge
     bridge_params = os.path.join(get_package_share_directory(package_name),'config','gz_bridge.yaml')
@@ -81,7 +84,9 @@ def generate_launch_description():
         arguments=[
             '--ros-args',
             '-p',
-            f'config_file:={bridge_params}',]
+            f'config_file:={bridge_params}',],
+        parameters=[{'use_sim_time': True}],
+        output='screen'
     )
     
     # Launch Rviz with diff bot rviz file
@@ -121,5 +126,5 @@ def generate_launch_description():
         gazebo_client,
         ros_gz_bridge,
         spawn_diff_bot,
-        static_transform_publisher_map_odom,
+        #static_transform_publisher_map_odom,
     ])

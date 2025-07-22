@@ -10,9 +10,10 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', [
-            'launch/full_simulation.launch.py',
-        ]),
+        ('share/' + package_name + '/launch', ['launch/full_simulation.launch.py']),
+        ('share/' + package_name + '/config', ['config/nav2_params.yaml']),
+        ('share/' + package_name + '/config', ['config/mapper_params_online_async.yaml']),
+        ('share/' + package_name + '/launch', ['launch/exploration.launch.py']),
     ],
     install_requires=['setuptools',  'numpy'],
     zip_safe=True,
@@ -23,9 +24,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'detector = frontier_exploration.detector:main',
-            'wait_for_clock = frontier_exploration.wait_for_clock:main',
-            'odom_tf_publisher = frontier_exploration.odom_tf_publisher:main',
+            'explorer = frontier_exploration.explorer_node:main',
+            'navigation = frontier_exploration.navigation_node:main',
         ],
     },
 )
