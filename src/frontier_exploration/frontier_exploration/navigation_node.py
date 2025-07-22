@@ -45,6 +45,7 @@ class FrontierNavigation(Node):
 
         self.tries = 1
         self.max_tries = 3
+        self.explored_frontiers = 0
 
         self.get_logger().info("FrontierClient listo.")
 
@@ -106,6 +107,7 @@ class FrontierNavigation(Node):
                     self.tries = 1
                 else:
                     self.get_logger().info("Ya no es posible encontrar más fronteras. Finalizando exploración.")
+                    self.get_logger().info(f"Exploración finalizada con {self.explored_frontiers} fronteras alcanzadas.")
                     self.destroy_node()
             return
         
@@ -164,6 +166,7 @@ class FrontierNavigation(Node):
             if error_code == 0:
                 self.get_logger().info("Meta alcanzada con éxito.")
                 self.succeful_points.append((self.goal_x, self.goal_y))
+                self.explored_frontiers += 1
             else:
                 try:
                     trans = self.tf_buffer.lookup_transform(
