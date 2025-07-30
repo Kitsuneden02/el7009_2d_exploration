@@ -45,7 +45,9 @@ ros2 launch el7009_diff_drive_robot robot.launch.py
 ros2 launch frontier_exploration slam_n_nav.launch.py
 ```
 IMPORTANTE: Se debe esperar a que termine de cargar antes de seguir con el siguiente launch. Cuando esté completamente cargado se debería apreciar lo siguiente en Rviz:
+
 <img width="591" height="375" alt="Screenshot from 2025-07-29 22-04-12" src="https://github.com/user-attachments/assets/7703a3e9-8030-42fc-88cd-67fac839c5ae" />
+
 #### 3) Lanzar explorador de fronteras
 ```
 ros2 launch frontier_exploration exploration.launch.py
