@@ -11,7 +11,7 @@ sudo apt install -y \
     ros-jazzy-navigation2 \
     ros-jazzy-nav2-bringup
 
-pip install --user -r requirements.txt
+pip install --user --break-system-packages -r requirements.txt
 
 colcon build --symlink-install
 
