@@ -51,6 +51,12 @@ IMPORTANTE: Se debe esperar a que termine de cargar antes de seguir con el sigui
 ros2 launch frontier_exploration exploration.launch.py
 ```
 
+#### Extra) Sourcear modelos
+Si se desea usar hospital, se deben hacer las respectivas modificaciones en `robot.launch.py`. Además también deberá exportar el path a los modelos antes de ejecutar todo el sistema:
+```
+export GZ_SIM_RESOURCE_PATH=/path/to/el7009_2d_exploration/src/el7009_diff_drive_robot/models/hospital/model
+```
+
 ---
 
 ### Créditos y referencias
