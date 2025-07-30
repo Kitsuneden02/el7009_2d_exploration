@@ -18,8 +18,8 @@ def generate_launch_description():
 
     # Path to default world 
     #world_path = os.path.join(get_package_share_directory(package_name),'worlds', 'industrial-warehouse.sdf')
-    #world_path = os.path.join(get_package_share_directory('el7009_diff_drive_robot'), 'worlds', 'turtlebot3_house.world')
-    world_path = os.path.join('/home/seabass/Dataset-of-Gazebo-Worlds-Models-and-Maps/worlds/hospital', 'hospital.world')
+    world_path = os.path.join(get_package_share_directory('el7009_diff_drive_robot'), 'worlds', 'turtlebot3_house.world')
+    #world_path = os.path.join('/home/seabass/Dataset-of-Gazebo-Worlds-Models-and-Maps/worlds/hospital', 'hospital.world')
 
     # Launch Arguments
     declare_world = DeclareLaunchArgument(
@@ -62,7 +62,20 @@ def generate_launch_description():
                                    '-z', '0.2'],
                         output='screen'
     )
-    
+    """
+    # Turtblebot3_house
+    spawn_diff_bot = Node(
+                        package='ros_gz_sim', 
+                        executable='create',
+                        arguments=['-topic', 'robot_description',
+                                   '-name', 'diff_bot',
+                                   '-x', '-2.65',
+                                   '-y', '0.5',
+                                   '-z', '0.2'],
+                        output='screen'
+    )
+
+    # Hospital
     """
     spawn_diff_bot = Node(
         package='ros_gz_sim', 
@@ -74,7 +87,7 @@ def generate_launch_description():
                 '-z', '0.1'],
         output='screen'
     )
-
+    """
 
     # Launch the Gazebo-ROS bridge
     bridge_params = os.path.join(get_package_share_directory(package_name),'config','gz_bridge.yaml')

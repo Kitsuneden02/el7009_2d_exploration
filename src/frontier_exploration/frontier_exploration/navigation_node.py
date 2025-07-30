@@ -3,6 +3,7 @@ from rclpy.node import Node
 import math
 from tf_transformations import quaternion_from_euler 
 import tf2_ros
+import time
 
 from geometry_msgs.msg import PoseStamped
 from visualization_msgs.msg import MarkerArray
@@ -34,20 +35,21 @@ class FrontierNavigation(Node):
         self.goal_y = 0.0
 
         self.failed_points = []
-        self.fail_dist_threshold = 0.4  # metros
+        self.fail_dist_threshold = 0.3  # metros
         self.succeful_dist_threshold = 0.3  # metros
 
         self.initial_min_travel_distance = 0.7
         self.min_travel_distance = self.initial_min_travel_distance
-        self.min_travel_distance_cap = 0.4
+        self.min_travel_distance_cap = 0.3
 
         self.succeful_points = []
 
         self.tries = 1
-        self.max_tries = 3
+        self.max_tries = 2
         self.explored_frontiers = 0
 
         self.get_logger().info("FrontierClient listo.")
+        self.start_time = time.time()
 
     def is_fail_point(self, x, y):
         for px, py in self.failed_points:
@@ -107,7 +109,7 @@ class FrontierNavigation(Node):
                     self.tries = 1
                 else:
                     self.get_logger().info("Ya no es posible encontrar más fronteras. Finalizando exploración.")
-                    self.get_logger().info(f"Exploración finalizada con {self.explored_frontiers} fronteras alcanzadas.")
+                    self.get_logger().info(f"Exploración finalizada con {self.explored_frontiers} fronteras alcanzadas. Tiempo de exploración: {time.time() - self.start_time}")
                     self.destroy_node()
             return
         

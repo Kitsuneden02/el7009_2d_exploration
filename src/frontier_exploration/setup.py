@@ -10,7 +10,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/full_simulation.launch.py']),
+        ('share/' + package_name + '/launch', ['launch/slam_n_nav.launch.py']),
         ('share/' + package_name + '/config', ['config/nav2_params.yaml']),
         ('share/' + package_name + '/config', ['config/mapper_params_online_async.yaml']),
         ('share/' + package_name + '/launch', ['launch/exploration.launch.py']),
